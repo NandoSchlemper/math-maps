@@ -2,18 +2,19 @@ package main
 
 import (
 	e "math-coordenadas/src/entities"
-	u "math-coordenadas/src/utils"
+	"math-coordenadas/src/utils"
 )
 
 func main() {
-	centro_cliente1 := e.NewCoordenada(-22.49096, -47.58047)
-	cliente1 := e.NewMathBox(1.0, centro_cliente1)
-	lat, lon := e.NewMathBoxSquare(cliente1)
-
-	coordenada_alvo3 := e.NewCoordenada(-80.4367065, -67.5699109)
-	coordenada_alvo2 := e.NewCoordenada(-22.4367065, -47.5699109)
-	coordenada_alvo := e.NewCoordenada(-22.49096, -47.58047)
-	u.IsAt(coordenada_alvo, lat, lon)  // true
-	u.IsAt(coordenada_alvo2, lat, lon) // false
-	u.IsAt(coordenada_alvo3, lat, lon) // false
+	cord := e.NewCoordenada(-22.49265586923846, -47.58156334720672)
+	l := e.NewLocations()
+	l.RegisterCoordenadas()
+	for x := range l.Localizacoes {
+		result := utils.IsAt(cord, l.Localizacoes[x].Lat, l.Localizacoes[x].Lon)
+		if result {
+			println("Está dentro de X cliente")
+		} else {
+			println("Não está dentro de X cliente")
+		}
+	}
 }
