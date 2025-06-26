@@ -23,8 +23,8 @@ func NewCoordenada(lat, lon float64) *Coordenada {
     }
 }
 
-func NewMinMaxCoordenada(latsum, ladif, lonsum, londif float64) *Coordenada {
-    if 
+func NewMinMaxCoordenada(listaValores float64) *Coordenada[] {
+    
 }
 
 func NewMathBox(lado int, centro Coordenada) IMathBox {
@@ -43,4 +43,5 @@ func CalcularMinimoMaximo(c: MathBox) -> (err, Coordenada) {
     lonsum := c.centro.lon + delta_longitude
     londif := c.centro.lon - delta_longitude
     
+    variaveis := [latsum, latdif, lonsum, londif]
 }
