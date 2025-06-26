@@ -1,6 +1,9 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 type Coordenada struct {
 	lat float64
@@ -45,19 +48,21 @@ func (c Coordenada) maxValue() float64 {
 }
 
 type IMathBox interface {
-	inTheBox(Coordenada) (bool, error)
 	cen() ICoordenada
 	km() float64
+}
+
+func SquareVerify(alvo ICoordenada, latmax, latmin, lonmax, lonmin float64) {
+	if alvo.latitude() >= latmin && alvo.latitude() <= latmax && alvo.longitude() >= lonmin && alvo.longitude() <= lonmax {
+		fmt.Println("Está dentro")
+	} else {
+		fmt.Println("Está fora")
+	}
 }
 
 type MathBox struct {
 	side   float64
 	center ICoordenada
-}
-
-// inTheBox implements IMathBox.
-func (m *MathBox) inTheBox(Coordenada) (bool, error) {
-	panic("unimplemented")
 }
 
 func (m MathBox) cen() ICoordenada {
@@ -107,4 +112,11 @@ func main() {
 	max_lat := lat.maxValue()
 	min_lon := lon.minValue()
 	max_lon := lon.maxValue()
+
+	coordenada_alvo3 := NewCoordenada(-80.4367065, -67.5699109)
+	coordenada_alvo2 := NewCoordenada(-22.4367065, -47.5699109)
+	coordenada_alvo := NewCoordenada(-22.49096, -47.58047)
+	SquareVerify(coordenada_alvo, max_lat, min_lat, max_lon, min_lon)
+	SquareVerify(coordenada_alvo2, max_lat, min_lat, max_lon, min_lon)
+	SquareVerify(coordenada_alvo3, max_lat, min_lat, max_lon, min_lon)
 }
