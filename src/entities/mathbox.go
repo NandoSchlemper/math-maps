@@ -20,14 +20,14 @@ func (m MathBox) km() float64 {
 	return m.side
 }
 
-func NewMathBox(side float64, center ICoordenada) IMathBox {
+func NewMatematicaBox(side float64, center ICoordenada) IMathBox {
 	return &MathBox{
 		side:   side,
 		center: center,
 	}
 }
 
-func NewMathBoxSquare(c IMathBox) (ICoordenada, ICoordenada) {
+func NewMathCaixaSquare(c IMathBox) (ICoordenada, ICoordenada) {
 	cos_angle := (c.km() * math.Pi) / 180.0
 	delta_latitude := (c.km() / 2) / 111
 	delta_longitude := (c.km() / 2) / (111 * math.Cos(cos_angle))
