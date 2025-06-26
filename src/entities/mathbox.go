@@ -28,17 +28,16 @@ func NewMatematicaBox(side float64, center ICoordenada) IMathBox {
 }
 
 func NewMathCaixaSquare(c IMathBox) (ICoordenada, ICoordenada) {
-	cos_angle := (c.km() * math.Pi) / 180.0
-	delta_latitude := (c.km() / 2) / 111
-	delta_longitude := (c.km() / 2) / (111 * math.Cos(cos_angle))
+	center := c.cen()
+	halfKm := c.km() / 2
 
-	latsum := c.cen().Latitude() + delta_latitude
-	latdif := c.cen().Latitude() - delta_latitude
-	lonsum := c.cen().Longitude() + delta_longitude
-	londif := c.cen().Longitude() - delta_longitude
+	deltaLat := halfKm / 111
 
-	lat := NewCoordenada(latsum, latdif)
-	lon := NewCoordenada(lonsum, londif)
+	cosAngle := (c.km() * math.Pi) / 180
+	deltaLon := halfKm / (111 * math.Cos(cosAngle))
+
+	lat := NewCoordenada(center.Latitude()+deltaLat, center.Latitude()-deltaLat)
+	lon := NewCoordenada(center.Longitude()+deltaLon, center.Longitude()-deltaLon)
 
 	return lat, lon
 }

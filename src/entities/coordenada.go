@@ -21,25 +21,17 @@ func (c Coordenada) Longitude() float64 {
 }
 
 func (c Coordenada) MinValue() float64 {
-	var result float64
-	if c.lat > c.lon {
-		result = c.lon
-	} else if c.lat < c.lon {
-		result = c.lat
+	if c.lat < c.lon {
+		return c.lat
 	}
-
-	return result
+	return c.lon
 }
 
 func (c Coordenada) MaxValue() float64 {
-	var result float64
 	if c.lat > c.lon {
-		result = c.lat
-	} else if c.lat < c.lon {
-		result = c.lon
+		return c.lat
 	}
-
-	return result
+	return c.lon
 }
 
 func NewCoordenada(lat, lon float64) ICoordenada {
