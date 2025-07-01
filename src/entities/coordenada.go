@@ -8,35 +8,35 @@ type ICoordenada interface {
 }
 
 type Coordenada struct {
-	lat float64
-	lon float64
+	Lat float64 `json:"lat"`
+	Lon float64 `json:"lon"`
 }
 
 func (c Coordenada) Latitude() float64 {
-	return c.lat
+	return c.Lat
 }
 
 func (c Coordenada) Longitude() float64 {
-	return c.lon
+	return c.Lon
 }
 
 func (c Coordenada) MinValue() float64 {
-	if c.lat < c.lon {
-		return c.lat
+	if c.Lat < c.Lon {
+		return c.Lat
 	}
-	return c.lon
+	return c.Lon
 }
 
 func (c Coordenada) MaxValue() float64 {
-	if c.lat > c.lon {
-		return c.lat
+	if c.Lat > c.Lon {
+		return c.Lat
 	}
-	return c.lon
+	return c.Lon
 }
 
 func NewCoordenada(lat, lon float64) ICoordenada {
 	return &Coordenada{
-		lat: lat,
-		lon: lon,
+		Lat: lat,
+		Lon: lon,
 	}
 }

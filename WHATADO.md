@@ -45,3 +45,33 @@ func CalcularMinimoMaximo(c: MathBox) -> (err, Coordenada) {
     
     variaveis := [latsum, latdif, lonsum, londif]
 }
+
+type Dado struct {
+	ID    string `json:"id"`
+	Placa string `json:"placa"`
+	/*
+		IDVeiculo    string `json:"idveiculo"`
+		Principal    string `json:"principal"`
+		WebGrupoID   string `json:"web_grupo_id"`
+		Descricao    string `json:"descricao"`
+		DataGPS      string `json:"datagps"`
+		Localizacao  string `json:"localizacao"`
+		StatusIgn    string `json:"statusign"`
+		StatusGPS    string `json:"statusgps"`
+		Velocidade   string `json:"velocidade"`
+		Direcao      string `json:"direcao"`
+	*/
+	Lat string `json:"lat"`
+	Lon string `json:"lon"`
+	/*
+		Satelites    string `json:"satelites"`
+		NivelCel     string `json:"nivelcel"`
+		MovingStatus string `json:"moving_status"`
+		GPRSConn     string `json:"gprs_connection"`
+		GSMJamming   string `json:"gsm_jamming"`
+		Ancora       string `json:"ancora"`
+		WebGrupo     string `json:"web_grupo"`
+		OdometerCan  string `json:"odometerCan"`
+		Blocked      string `json:"blocked"`
+	*/
+}
