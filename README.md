@@ -43,3 +43,34 @@ IF
 λ <= λ_max
 {print("ta dentro da box")}
 Se esses valores se aplicarem ao ponto, ele pode estar dentro do quadrado
+
+Response API:
+type Dado struct {
+	ID    string `json:"id"`
+	Placa string `json:"placa"`
+	/*
+		IDVeiculo    string `json:"idveiculo"`
+		Principal    string `json:"principal"`
+		WebGrupoID   string `json:"web_grupo_id"`
+		Descricao    string `json:"descricao"`
+		DataGPS      string `json:"datagps"`
+		Localizacao  string `json:"localizacao"`
+		StatusIgn    string `json:"statusign"`
+		StatusGPS    string `json:"statusgps"`
+		Velocidade   string `json:"velocidade"`
+		Direcao      string `json:"direcao"`
+	*/
+	Lat string `json:"lat"`
+	Lon string `json:"lon"`
+	/*
+		Satelites    string `json:"satelites"`
+		NivelCel     string `json:"nivelcel"`
+		MovingStatus string `json:"moving_status"`
+		GPRSConn     string `json:"gprs_connection"`
+		GSMJamming   string `json:"gsm_jamming"`
+		Ancora       string `json:"ancora"`
+		WebGrupo     string `json:"web_grupo"`
+		OdometerCan  string `json:"odometerCan"`
+		Blocked      string `json:"blocked"`
+	*/
+}

@@ -1,13 +1,22 @@
 package entities
 
-import "net/http"
+import (
+	"bytes"
+	"encoding/base64"
+	"encoding/json"
+	"io"
+	"log"
+	"net/http"
+	"os"
+	"time"
+)
 
-// api v0.1
 type Dado struct {
-	ID    string `json:"id"`
-	Placa string `json:"placa"`
-	Lat   string `json:"lat"`
-	Lon   string `json:"lon"`
+	ID     string  `json:"id"`
+	Placa  string  `json:"placa"`
+	Lat    float64 `json:"lat,string"`
+	Lon    float64 `json:"lon,string"`
+	Status string
 }
 
 type Response struct {
@@ -21,37 +30,71 @@ type Response struct {
 	Dados     []Dado `json:"dados"`
 }
 
-type IWrsatAPI interface {
-	fetchAPI(string, string, http.Client)
-	getAddr() string
-	getPlate() string
-}
-type API struct {
-	User     string
-	Password string
-}
-
 type WrsatAPI struct {
-	addr string
+	Usuario  string
+	Password string
+	Url      string
 }
 
-// fetchAPI implements IWrsatAPI.
-func (w *WrsatAPI) fetchAPI(user, password string, client http.Client) {
-	panic("unimplemented")
+type IWrsatAPI interface {
+	LoadVariables()
+	FetchData() Response
 }
 
-// getAddr implements IWrsatAPI.
-func (w *WrsatAPI) getAddr() string {
-	return w.addr
-}
+// fetchData implements IWrsatAPI.
+func (w *WrsatAPI) FetchData() Response {
+	client := http.Client{Timeout: time.Second * 2}
 
-// getPlate implements IWrsatAPI.
-func (w *WrsatAPI) getPlate() string {
-	panic("unimplemented")
-}
-
-func NewWrsastAPI(addr string) IWrsatAPI {
-	return &WrsatAPI{
-		addr: addr,
+	payload := map[string]string{
+		"usuario":   w.Usuario,
+		"senha":     w.Password,
+		"ordem":     "ASC",
+		"limit":     "100",
+		"pagina":    "1",
+		"descricao": "",
 	}
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		log.Fatal("Erro ao Marshal do JSON")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, w.Url, bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req.Header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(w.Usuario+":"+w.Password)))
+	req.Header.Set("Content-Type", "application/json")
+
+	res, getErr := client.Do(req)
+	if getErr != nil {
+		log.Fatal("Erro ao realizar a requisição: \n", getErr)
+	}
+
+	defer res.Body.Close()
+
+	if req.Body == nil {
+		log.Fatal("Body = nil, wtf brother")
+	}
+
+	jsonBytes, _ := io.ReadAll(res.Body)
+	res.Body.Read(jsonBytes)
+	var resp Response
+	if err := json.Unmarshal(jsonBytes, &resp); err != nil {
+		panic(err)
+	}
+
+	return resp
+}
+
+// loadVariables implements IWrsatAPI
+func (w *WrsatAPI) LoadVariables() {
+	w.Usuario = os.Getenv("WRSAT_USER")
+	w.Password = os.Getenv("WRSAT_PASSWORD")
+	w.Url = os.Getenv("WRSAT_API_URL")
+}
+
+func NewWrsatAPI() IWrsatAPI {
+	return &WrsatAPI{}
 }
