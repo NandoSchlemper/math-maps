@@ -21,7 +21,7 @@ func App() {
 	clientApi.LoadVariables()
 	response := clientApi.FetchData()
 
-	client_locations.RegisterCoordenadas()
+	utils.RegisterCoordenadas(client_locations)
 
 	defer utils.Timer(time.Now(), "Fetching data")
 

@@ -11,6 +11,17 @@ import (
 	"time"
 )
 
+type IWrsatAPI interface {
+	LoadVariables()
+	FetchData() Response
+}
+
+type WrsatAPI struct {
+	Usuario  string
+	Password string
+	Url      string
+}
+
 type Dado struct {
 	ID     string  `json:"id"`
 	Placa  string  `json:"placa"`
@@ -28,17 +39,6 @@ type Response struct {
 	Pagina    string `json:"pagina"`
 	QtdResult int    `json:"qtd_result"`
 	Dados     []Dado `json:"dados"`
-}
-
-type WrsatAPI struct {
-	Usuario  string
-	Password string
-	Url      string
-}
-
-type IWrsatAPI interface {
-	LoadVariables()
-	FetchData() Response
 }
 
 // fetchData implements IWrsatAPI.
