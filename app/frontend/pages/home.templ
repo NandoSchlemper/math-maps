@@ -1,0 +1,25 @@
+package pages
+
+type Gotcha struct {
+    Name string
+}
+
+templ Hello(name string) {
+    <div class="centered">
+        <div class="message"><p>Bem vindo à <span style="color:blueviolet">{name}</span></p></div>
+    </div>
+    <style type="text/css">
+        p {
+            font-family: sans-serif;
+            text-align: center;
+            
+        }
+        .centered {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+}
