@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math-coordenadas/frontend/pages"
 	"net/http"
 
@@ -18,7 +19,8 @@ func main() {
 	// }
 
 	mux := http.NewServeMux()
-	component := pages.Hello("Thor")
+	component := pages.Home()
 	mux.Handle("/", templ.Handler(component))
+	fmt.Println("Iniciando Template.")
 	http.ListenAndServe(":3030", mux)
 }

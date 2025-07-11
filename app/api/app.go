@@ -2,8 +2,8 @@ package src
 
 import (
 	"log"
-	"math-coordenadas/src/entities"
-	"math-coordenadas/src/utils"
+	"math-coordenadas/api/entities"
+	"math-coordenadas/api/utils"
 	"time"
 
 	"github.com/joho/godotenv"
