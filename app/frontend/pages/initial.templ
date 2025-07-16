@@ -1,0 +1,53 @@
+package pages
+
+import "math-coordenadas/frontend/components"
+
+templ Initial() {
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>THOR</title>
+        <link rel="icon" href="./static/icon.png" type="image/png">
+    </head>
+        <body>
+            <div class="centered">
+                <div class="message">
+                    <p>Bem vindo à 
+                        <span style="color:blueviolet; font-weight:bold;">Thor</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="bottom">
+                <div class="button">
+                    @components.InitialButton()
+                </div>
+            </div>
+        </body>
+    </html>
+    <style lang="css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%; 
+        }
+        p {
+            font-family: sans-serif;
+            text-align: center;
+            font-size: medium;
+        }
+        .centered {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        .bottom {
+            height: 15vh;
+        }
+    </style>
+}

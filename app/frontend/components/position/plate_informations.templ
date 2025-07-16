@@ -1,5 +1,9 @@
 // Will have basic understanding about the plate, will be inside square
 // Aqui vou ser bem direto quanto aos dados, preciso retornar basicamente em formato tabular os dados que vou receber da API
+package position
+
+import "math-coordenadas/api/entities"
+
 // A forma como os dados ficarão apresentados será em formato de TABELA a principio, ou seja
 // <modificar aqui como que ficarão a estilização do baguio>
 // Cada "Row" será SELECIONÁVEL, e mostrará um modal do histórico daquela determinada placa
@@ -7,3 +11,38 @@
 // tr é basicamente pra definir que estamos definindo valores para a tabela
 // th é para definirmos todas as colunas, nesse caso, possiveis locais para o caminhão estar
 // td são as informações de cada row da tabela
+
+// Basicamente, fazer um for para receber os dados e criar uma row da tabela para cada um dos dados recebidos
+
+templ LoadRows(dados entities.Response) {
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Placa</th>
+                <th>Localização</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        for _, placa := range dados.Dados {
+            <tr>
+                <td>{placa.ID}</td>
+                <td>{placa.Placa}</td>
+                <td>{placa.Location}</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+}
+
+/*
+type Dado struct {
+	ID     string  `json:"id"`
+	Placa  string  `json:"placa"`
+	Lat    float64 `json:"lat,string"`
+	Lon    float64 `json:"lon,string"`
+	Status string
+}
+*/

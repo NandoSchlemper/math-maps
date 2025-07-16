@@ -16,9 +16,9 @@ func ConcatenateCoordenadas(entities *entities.Response, l *[]entities.Cerco) {
 	for x := 0; x < len(entities.Dados); x++ {
 		for y := 0; y < len(*l); y++ {
 			if IsAt(entities.Dados[x].Lat, entities.Dados[x].Lon, (*l)[y].Lat, (*l)[y].Lon) {
-				entities.Dados[x].Status = (*l)[y].Name
+				entities.Dados[x].Location = (*l)[y].Name
 			} else {
-				entities.Dados[x].Status = "None"
+				entities.Dados[x].Location = "None"
 			}
 		}
 	}

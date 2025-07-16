@@ -8,7 +8,32 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "math-coordenadas/frontend/components"
+import "math-coordenadas/frontend/components/position"
+import "math-coordenadas/api/entities"
+import "github.com/joho/godotenv"
+import "math-coordenadas/api/utils"
+import "log"
+import "time"
+
+func apiRequest() entities.Response {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Erro ao carregar a as variaveis de ambiente: ", err.Error())
+	}
+
+	clientApi := entities.NewWrsatAPI()
+	client_locations := entities.NewCercos()
+
+	utils.RegisterCoordenadas(&client_locations)
+	clientApi.LoadVariables()
+	response := clientApi.FetchData()
+
+	defer utils.Timer(time.Now(), "Fetching data")
+
+	utils.ConcatenateCoordenadas(&response, &client_locations)
+
+	return response
+}
 
 func Home() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -31,15 +56,7 @@ func Home() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"pt-BR\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>THOR</title><link rel=\"icon\" href=\"./static/icon.png\" type=\"image/png\"></head><body><div class=\"centered\"><div class=\"message\"><p>Bem vindo à  <span style=\"color:blueviolet; font-weight:bold;\">Thor</span></p></div></div><div class=\"bottom\"><div class=\"button\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = components.InitialButton().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div></body></html><style lang=\"css\">\r\n        html, body {\r\n            margin: 0;\r\n            padding: 0;\r\n            height: 100%;\r\n            width: 100%; \r\n        }\r\n        p {\r\n            font-family: sans-serif;\r\n            text-align: center;\r\n            font-size: medium;\r\n        }\r\n        .centered {\r\n            position: relative;\r\n            display: flex;\r\n            justify-content: center;\r\n            align-items: center;\r\n            height: 80vh;\r\n        }\r\n        .bottom {\r\n            height: 15vh;\r\n        }\r\n    </style>")
+		templ_7745c5c3_Err = position.LoadRows(apiRequest()).Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

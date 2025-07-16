@@ -1,53 +1,32 @@
 package pages
 
-import "math-coordenadas/frontend/components"
+import "math-coordenadas/frontend/components/position"
+import "math-coordenadas/api/entities"
+import "github.com/joho/godotenv"
+import "math-coordenadas/api/utils"
+import "log"
+import "time"
+
+func apiRequest() (entities.Response) {
+    err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Erro ao carregar a as variaveis de ambiente: ", err.Error())
+	}
+
+	clientApi := entities.NewWrsatAPI()
+	client_locations := entities.NewCercos()
+
+	utils.RegisterCoordenadas(&client_locations)
+	clientApi.LoadVariables()
+	response := clientApi.FetchData()
+
+	defer utils.Timer(time.Now(), "Fetching data")
+
+	utils.ConcatenateCoordenadas(&response, &client_locations)
+
+    return response
+}
 
 templ Home() {
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>THOR</title>
-        <link rel="icon" href="./static/icon.png" type="image/png">
-    </head>
-        <body>
-            <div class="centered">
-                <div class="message">
-                    <p>Bem vindo à 
-                        <span style="color:blueviolet; font-weight:bold;">Thor</span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="bottom">
-                <div class="button">
-                    @components.InitialButton()
-                </div>
-            </div>
-        </body>
-    </html>
-    <style lang="css">
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%; 
-        }
-        p {
-            font-family: sans-serif;
-            text-align: center;
-            font-size: medium;
-        }
-        .centered {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-        }
-        .bottom {
-            height: 15vh;
-        }
-    </style>
+    @position.LoadRows(apiRequest())
 }

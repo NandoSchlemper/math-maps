@@ -19,8 +19,10 @@ func main() {
 	// }
 
 	mux := http.NewServeMux()
-	component := pages.Home()
-	mux.Handle("/", templ.Handler(component))
+	initial_page := pages.Initial()
+	home_page := pages.Home()
+	mux.Handle("/", templ.Handler(initial_page))
+	mux.Handle("/home", templ.Handler(home_page))
 	fmt.Println("Iniciando Template.")
 	http.ListenAndServe(":3030", mux)
 }
