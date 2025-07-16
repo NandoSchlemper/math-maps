@@ -13,7 +13,6 @@ import "math-coordenadas/api/entities"
 import "github.com/joho/godotenv"
 import "math-coordenadas/api/utils"
 import "log"
-import "time"
 
 func apiRequest() entities.Response {
 	err := godotenv.Load()
@@ -27,8 +26,6 @@ func apiRequest() entities.Response {
 	utils.RegisterCoordenadas(&client_locations)
 	clientApi.LoadVariables()
 	response := clientApi.FetchData()
-
-	defer utils.Timer(time.Now(), "Fetching data")
 
 	utils.ConcatenateCoordenadas(&response, &client_locations)
 

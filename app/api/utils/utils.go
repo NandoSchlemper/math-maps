@@ -12,6 +12,7 @@ func IsAt(alvo_lat, alvo_lon float64, lat, lon entities.ICoordenada) bool {
 		alvo_lon >= lon.MinValue() && alvo_lon <= lon.MaxValue()
 }
 
+// Adicionar passos lógicos à essa
 func ConcatenateCoordenadas(entities *entities.Response, l *[]entities.Cerco) {
 	for x := 0; x < len(entities.Dados); x++ {
 		for y := 0; y < len(*l); y++ {
@@ -44,19 +45,18 @@ func CalcularCoordenadas(c entities.ISquare) (entities.ICoordenada, entities.ICo
 	return lat, lon
 }
 
-func RegisterCoordenadas(l *[]entities.Cerco) *[]entities.Cerco {
-	delta_lat, delta_lon := NewClient(1.000, -22.49096, -47.58047)
-	salto_lat, salto_lon := NewClient(5.0, -23.74781, -47.58103)
-	zanforlin_lat, zanforlin_lon := NewClient(0.140, -23.74781, -47.58103)
-	braganceiro_lat, braganceiro_lon := NewClient(5.0, -24.16354, -48.90452)
-
-	*l = append(*l, *entities.NewCerco("Delta", delta_lat, delta_lon))
-	*l = append(*l, *entities.NewCerco("Salto", salto_lat, salto_lon))
-	*l = append(*l, *entities.NewCerco("Zanforlin", zanforlin_lat, zanforlin_lon))
-	*l = append(*l, *entities.NewCerco("Braganceiro", braganceiro_lat, braganceiro_lon))
-	return l
+// Fazer um formulario para criação e inclusão de mais posições, salvando no DB
+func RegisterCoordenadas(l *[]entities.Cerco) {
+	NewClient(1.0, -22.49096, -47.58047, "Delta", l)
+	NewClient(5.0, -23.74781, -47.58103, "Salto", l)
+	NewClient(0.2, -23.74781, -47.58103, "Zanforlin", l)
+	NewClient(5.0, -24.16354, -48.90452, "Braganceiro", l)
 }
 
-func NewClient(km float64, lat, lon float64) (entities.ICoordenada, entities.ICoordenada) {
-	return CalcularCoordenadas(entities.NewSquare(km, entities.NewCoordenada(lat, lon)))
+func NewClient(km, lat, lon float64, name string, L *[]entities.Cerco) {
+	latitude, longitude := CalcularCoordenadas(entities.NewSquare(km, entities.NewCoordenada(lat, lon)))
+	*L = append(*L, *entities.NewCerco(name, latitude, longitude))
 }
+
+// NewClient vai receber:
+// Nome, Descrição, Tipo, KM, Lat, Lon e []Cercos
