@@ -15,12 +15,16 @@ import "math-coordenadas/api/entities"
 // Basicamente, fazer um for para receber os dados e criar uma row da tabela para cada um dos dados recebidos
 
 templ LoadRows(dados entities.Response) {
-    <table>
+    <table class="position-table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Placa</th>
-                <th>Localização</th>
+                <th>Operação</th>
+                <th>Motorista</th>
+                <th>Placas</th>
+                <th>Localizações</th>
+                <th>Velocidade</th>
+                <th>Estado</th>
             </tr>
         </thead>
 
@@ -28,13 +32,90 @@ templ LoadRows(dados entities.Response) {
         for _, placa := range dados.Dados {
             <tr>
                 <td>{placa.ID}</td>
+                <td>{placa.Operação.Nome}</td> // Rodocaçamba, Piso, etc
+                <td>{placa.Motorista}</td>
                 <td>{placa.Placa}</td>
-                <td>{placa.Location}</td>
+                <td>
+                    <a href={placa.LinkPosition()} target="_blank" rel="noopener noreferrer">{placa.Location}</a>
+                </td> // Cercos
+                <td>{placa.Velocidades()}</td> // Velocidade
+                <td>{placa.Estado}</td> // Carregado ou Vazio
             </tr>
         }
-
         </tbody>
     </table>
+
+    <style>
+    .position-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 20px 0;
+        font-family: sans-serif;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        background: white;
+    }
+
+    .position-table th {
+        background-color: #5900ff;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 15px;
+        text-align: left;
+        position: relative;
+    }
+
+    .position-table th:not(:last-child):after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 25%;
+        height: 50%;
+        width: 1px;
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .position-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 1.0s ease;
+    }
+
+    .position-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .position-table tr:hover td {
+        background-color: #f8f4ff;
+        color: #5900ff;
+        cursor: pointer;
+    }
+
+    .position-table tr {
+        transition: all 1.0s ease;
+        position: relative;
+    }
+
+    .position-table tr:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background-color: #5900ff;
+        transition: all 2.0s cubic-bezier(0.35, 0.1, 0.25, 1);
+    }
+
+    .position-table tr:hover:after {
+        width: 100%;
+    }
+    </style>
 }
 
 /*

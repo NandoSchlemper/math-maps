@@ -5,7 +5,7 @@ Referencial: Linha do Equador
 ( φ ) Latitude -> -90º (Sul) | +90º (Norte)
 ( λ ) Longitude -> -180º (Oeste) | +180º  (Leste)
 
-### 2. Cercos Poligonais
+### 2. Cercos (Quadrado 90º)
 Centro = [φ₀ | λ₀] -> Respectivamente latitude e longitude do ponto central
 
 L = Lado do quadrado (km)

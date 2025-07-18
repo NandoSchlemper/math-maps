@@ -15,12 +15,16 @@ func IsAt(alvo_lat, alvo_lon float64, lat, lon entities.ICoordenada) bool {
 // Adicionar passos lógicos à essa
 func ConcatenateCoordenadas(entities *entities.Response, l *[]entities.Cerco) {
 	for x := 0; x < len(entities.Dados); x++ {
+		found := false
 		for y := 0; y < len(*l); y++ {
 			if IsAt(entities.Dados[x].Lat, entities.Dados[x].Lon, (*l)[y].Lat, (*l)[y].Lon) {
 				entities.Dados[x].Location = (*l)[y].Name
-			} else {
-				entities.Dados[x].Location = "None"
+				found = true
+				break
 			}
+		}
+		if !found {
+			entities.Dados[x].Location = "None"
 		}
 	}
 }
@@ -47,10 +51,12 @@ func CalcularCoordenadas(c entities.ISquare) (entities.ICoordenada, entities.ICo
 
 // Fazer um formulario para criação e inclusão de mais posições, salvando no DB
 func RegisterCoordenadas(l *[]entities.Cerco) {
-	NewClient(1.0, -22.49096, -47.58047, "Delta", l)
+	NewClient(1.0, -22.49096, -47.58047, "Delta Antiga", l)
+	NewClient(1.1, -22.49258, -47.5676, "Delta Nova", l)
 	NewClient(5.0, -23.74781, -47.58103, "Salto", l)
 	NewClient(0.2, -23.74781, -47.58103, "Zanforlin", l)
-	NewClient(5.0, -24.16354, -48.90452, "Braganceiro", l)
+	NewClient(2.0, -24.1643, -48.9076, "Braganceiro", l)
+	NewClient(1.0, -22.44113, -47.56861, "Pátio", l)
 }
 
 func NewClient(km, lat, lon float64, name string, L *[]entities.Cerco) {

@@ -13,8 +13,8 @@ templ Initial() {
     </head>
         <body>
             <div class="centered">
-                <div class="message">
-                    <p>Bem vindo à 
+                <div class="message-div">
+                    <p class="message-content">Bem vindo à 
                         <span style="color:blueviolet; font-weight:bold;">Thor</span>
                     </p>
                 </div>
@@ -48,6 +48,10 @@ templ Initial() {
         }
         .bottom {
             height: 15vh;
+        }
+
+        .message-content {
+            font-size: 5vh;
         }
     </style>
 }
