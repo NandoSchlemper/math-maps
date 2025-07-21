@@ -12,7 +12,6 @@ func IsAt(alvo_lat, alvo_lon float64, lat, lon entities.ICoordenada) bool {
 		alvo_lon >= lon.MinValue() && alvo_lon <= lon.MaxValue()
 }
 
-// Adicionar passos lógicos à essa
 func ConcatenateCoordenadas(entities *entities.Response, l *[]entities.Cerco) {
 	for x := 0; x < len(entities.Dados); x++ {
 		found := false

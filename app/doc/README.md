@@ -52,7 +52,7 @@ type Dado struct {
 		IDVeiculo    string `json:"idveiculo"`
 		Principal    string `json:"principal"`
 		WebGrupoID   string `json:"web_grupo_id"`
-		Descricao    string `json:"descricao"`
+		Descricao    string `json:"descricao"`	
 		DataGPS      string `json:"datagps"`
 		Localizacao  string `json:"localizacao"`
 		StatusIgn    string `json:"statusign"`
@@ -64,7 +64,7 @@ type Dado struct {
 	Lon string `json:"lon"`
 	/*
 		Satelites    string `json:"satelites"`
-		NivelCel     string `json:"nivelcel"`
+		NivelCel     string `json:"nivelcexl"`
 		MovingStatus string `json:"moving_status"`
 		GPRSConn     string `json:"gprs_connection"`
 		GSMJamming   string `json:"gsm_jamming"`
