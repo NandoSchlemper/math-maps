@@ -21,7 +21,10 @@ func main() {
 	mux := http.NewServeMux()
 	initial_page := pages.Initial()
 	home_page := pages.Home()
+	bi := pages.PowerBI()
+
 	mux.Handle("/", templ.Handler(initial_page))
+	mux.Handle("/bi", templ.Handler(bi))
 	mux.Handle("/home", templ.Handler(home_page))
 	fmt.Println("Iniciando Template.")
 	http.ListenAndServe(":3030", mux)
